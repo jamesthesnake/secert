@@ -2,21 +2,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <unistd.h>
 typedef int *pointerInt;
 typedef int Array[5];
 typedef pointerInt  IntPointer[5];
 
 
-Initialzation (Array array, IntPointer pointerarray){
+void Initialzation (Array array, IntPointer pointerarray){
 
-
+  int seed;
   int i =0;
          for (i=0; i<5; i++){
-    srand(getpid()-i);
-    array[i]= rand();
-   
-    pointerarray[i]=&array[i];
+	    seed=getpid()-i;
+	    srand(seed);
+	    array[i]= rand();
+	    pointerarray[i]=&array[i];
   }
 }
 
@@ -49,10 +49,10 @@ void sortArray ( Array  array){
 
   for(i=0;i<5;i++){
     for(j=0;j<4;j++){
-      if(array[j]>array[j+1]){
-	flip=array[j];
-	array[j  ]=array[j+1];
-        array[j+1]=flip;
+      if(*(array+j)>*(array+j+1)){
+	flip=*(array+j);
+	*(array+j  )=*(array+j+1);
+        *(array+j+1)=flip;
       }
     
 
